@@ -45,11 +45,14 @@ def main():
     def write_new_word():
         message.append(Morse.NEW_WORD)
 
+    def clear_message():
+        message.clear()
+
     def send_message():
         while running and message:
             morse_code = message.pop(0)
             send_code(morse_code)
-
+    
     def send_code(code):
         hi, lo = MorseToSound[code]
         if hi > 0:
@@ -62,8 +65,8 @@ def main():
     button2.when_pressed = write_long
     button3.when_pressed = write_new_letter
     button4.when_pressed = write_new_word
-    button5.when_pressed = send_message
-    #button6.when_pressed = sen
+    button5.when_pressed = clear_message
+    button6.when_pressed = send_message
 
     while running:
         pass
