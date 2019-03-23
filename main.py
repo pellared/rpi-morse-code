@@ -4,6 +4,17 @@ import gpiozero
 import time
 from enum import Enum
 
+class Pi:
+    led = gpiozero.LED(17) 
+    active_buzzer = gpiozero.Buzzer(20)
+    button1 = gpiozero.Button(26)
+    button2 = gpiozero.Button(19)
+    button3 = gpiozero.Button(13)
+    button4 = gpiozero.Button(6)
+    button5 = gpiozero.Button(5)
+    button6 = gpiozero.Button(22)
+    button7 = gpiozero.Button(27)
+
 Morse = Enum("Morse", "SHORT LONG NEW_LETTER NEW_WORD")
 
 MorseToSound = {
@@ -43,28 +54,15 @@ CharToMorse = {
 }
 
 def main():
-    led = gpiozero.LED(17) 
-    led.on() # light when app is running
-
-    active_buzzer = gpiozero.Buzzer(20)
-
-    button1 = gpiozero.Button(26)
-    button2 = gpiozero.Button(19)
-    button3 = gpiozero.Button(13)
-    button4 = gpiozero.Button(6)
-    button5 = gpiozero.Button(5)
-    button6 = gpiozero.Button(22)
-    button7 = gpiozero.Button(27)
-
     running = True
+    Pi.led.on() # light when app is running
     def close():
         nonlocal running
         print("closing...")
         running = False
-    button7.when_pressed = close
+    Pi.button7.when_pressed = close
 
     message = []
-    
     def write_short():
         message.append(Morse.SHORT)
     def write_long():
@@ -73,33 +71,34 @@ def main():
         message.append(Morse.NEW_LETTER)
     def write_new_word():
         message.append(Morse.NEW_WORD)
-
     def clear_message():
         message.clear()
-
     def send_message():
-        while running and message:
-            morse_code = message.pop(0)
-            send_code(morse_code)
-    
-    def send_code(code):
-        hi, lo = MorseToSound[code]
-        if hi > 0:
-            active_buzzer.on()
-            time.sleep(0.1 * hi)
-        active_buzzer.off()
-        time.sleep(0.1 * lo)
+        send_morse(message)
 
-    button1.when_pressed = write_short
-    button2.when_pressed = write_long
-    button3.when_pressed = write_new_letter
-    button4.when_pressed = write_new_word
-    button5.when_pressed = clear_message
-    button6.when_pressed = send_message
+    Pi.button1.when_pressed = write_short
+    Pi.button2.when_pressed = write_long
+    Pi.button3.when_pressed = write_new_letter
+    Pi.button4.when_pressed = write_new_word
+    Pi.button5.when_pressed = clear_message
+    Pi.button6.when_pressed = send_message
 
     while running:
        s = input('--> ')
        send_code(Morse.LONG)
+
+def send_morse(morse):
+    while morse:
+        morse_code = morse.pop(0)
+        send_code(morse_code)
+
+def send_code(code):
+    hi, lo = MorseToSound[code]
+    if hi > 0:
+        Pi.active_buzzer.on()
+        time.sleep(0.1 * hi)
+    Pi.active_buzzer.off()
+    time.sleep(0.1 * lo)
 
 if __name__ == "__main__":
     main()
