@@ -84,8 +84,8 @@ def main():
     Pi.button6.when_pressed = send_message
 
     while running:
-       s = input('--> ')
-       send_code(Morse.LONG)
+        s = input('--> ')
+        to_morse(s)
 
 def send_morse(morse):
     while morse:
@@ -99,6 +99,17 @@ def send_code(code):
         time.sleep(0.1 * hi)
     Pi.active_buzzer.off()
     time.sleep(0.1 * lo)
+
+def to_morse(s):
+    for c in s:
+        if c.isspace():
+            send_code(Morse.NEW_WORD)
+        else:
+            c = c.lower()
+            if c in CharToMorse:
+                send_morse(CharToMorse[c].copy())
+                send_code(Morse.NEW_LETTER)
+
 
 if __name__ == "__main__":
     main()
