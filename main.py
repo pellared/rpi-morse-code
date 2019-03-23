@@ -13,6 +13,35 @@ MorseToSound = {
     Morse.NEW_WORD : (0, 6)
 }
 
+CharToMorse = {
+    "a" : [ Morse.SHORT, Morse.LONG ],
+    "b" : [ Morse.LONG, Morse.SHORT, Morse.SHORT, Morse.SHORT ],
+    "c" : [ Morse.LONG, Morse.SHORT, Morse.LONG, Morse.SHORT ],
+    "d" : [ Morse.LONG, Morse.SHORT, Morse.SHORT ],
+    "e" : [ Morse.SHORT ],
+    "f" : [ Morse.SHORT, Morse.SHORT, Morse.LONG, Morse.SHORT ],
+    "g" : [ Morse.LONG, Morse.LONG, Morse.SHORT ],
+    "h" : [ Morse.SHORT, Morse.SHORT, Morse.SHORT, Morse.SHORT ],
+    "i" : [ Morse.SHORT, Morse.SHORT ],
+    "j" : [ Morse.SHORT, Morse.LONG, Morse.LONG, Morse.LONG ],
+    "k" : [ Morse.LONG, Morse.SHORT, Morse.LONG ],
+    "l" : [ Morse.SHORT, Morse.LONG, Morse.SHORT, Morse.SHORT ],
+    "m" : [ Morse.LONG, Morse.LONG ],
+    "n" : [ Morse.LONG, Morse.SHORT ],
+    "o" : [ Morse.LONG, Morse.LONG, Morse.LONG ],
+    "p" : [ Morse.SHORT, Morse.LONG, Morse.LONG, Morse.SHORT ],
+    "q" : [ Morse.LONG, Morse.LONG, Morse.SHORT, Morse.LONG ],
+    "r" : [ Morse.SHORT, Morse.LONG, Morse.SHORT ],
+    "s" : [ Morse.SHORT, Morse.SHORT, Morse.SHORT ],
+    "t" : [ Morse.LONG ],
+    "u" : [ Morse.SHORT, Morse.SHORT, Morse.LONG ],
+    "v" : [ Morse.SHORT, Morse.SHORT, Morse.SHORT, Morse.LONG ],
+    "w" : [ Morse.SHORT, Morse.LONG, Morse.LONG ],
+    "x" : [ Morse.LONG, Morse.SHORT, Morse.SHORT, Morse.LONG ],
+    "y" : [ Morse.LONG, Morse.SHORT, Morse.LONG, Morse.LONG ],
+    "z" : [ Morse.LONG, Morse.LONG, Morse.SHORT, Morse.SHORT ]
+}
+
 def main():
     led = gpiozero.LED(17) 
     led.on() # light when app is running
@@ -69,7 +98,8 @@ def main():
     button6.when_pressed = send_message
 
     while running:
-        pass
+       s = input('--> ')
+       send_code(Morse.LONG)
 
 if __name__ == "__main__":
     main()
