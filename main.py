@@ -85,7 +85,8 @@ def main():
 
     while running:
         s = input('--> ')
-        to_morse(s)
+        m = to_morse(s)
+        send_morse(m)
 
 def send_morse(morse):
     while morse:
@@ -101,15 +102,16 @@ def send_code(code):
     time.sleep(0.1 * lo)
 
 def to_morse(s):
+    result = []
     for c in s:
         if c.isspace():
-            send_code(Morse.NEW_WORD)
+            result.append(Morse.NEW_WORD)
         else:
             c = c.lower()
             if c in CharToMorse:
-                send_morse(CharToMorse[c].copy())
-                send_code(Morse.NEW_LETTER)
-
+                result.extend(CharToMorse[c].copy())
+                result.append(Morse.NEW_LETTER)
+    return result
 
 if __name__ == "__main__":
     main()
