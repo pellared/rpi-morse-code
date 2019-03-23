@@ -15,13 +15,14 @@ class Pi:
     button6 = gpiozero.Button(22)
     button7 = gpiozero.Button(27)
 
-Morse = Enum("Morse", "SHORT LONG NEW_LETTER NEW_WORD")
+Morse = Enum("Morse", "SHORT LONG NEW_LETTER NEW_WORD EXTEND_LETTER_TO_WORD")
 
 MorseToSound = {
     Morse.SHORT : (1, 1),
     Morse.LONG : (3, 1),
     Morse.NEW_LETTER : (0, 2),
-    Morse.NEW_WORD : (0, 6)
+    Morse.NEW_WORD : (0, 6),
+    Morse.EXTEND_LETTER_TO_WORD : (0, 4)
 }
 
 CharToMorse = {
@@ -105,7 +106,7 @@ def to_morse(s):
     result = []
     for c in s:
         if c.isspace():
-            result.append(Morse.NEW_WORD)
+            result.append(Morse.EXTEND_LETTER_TO_WORD)
         else:
             c = c.lower()
             if c in CharToMorse:
