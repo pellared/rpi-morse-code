@@ -15,6 +15,8 @@ class Pi:
     button6 = gpiozero.Button(22)
     button7 = gpiozero.Button(27)
 
+SHORT_IN_SECONDS = 0.1
+
 Morse = Enum("Morse", "SHORT LONG NEW_LETTER NEW_WORD EXTEND_LETTER_TO_WORD")
 
 MorseToSound = {
@@ -98,9 +100,9 @@ def send_code(code):
     hi, lo = MorseToSound[code]
     if hi > 0:
         Pi.active_buzzer.on()
-        time.sleep(0.1 * hi)
+        time.sleep(SHORT_IN_SECONDS * hi)
     Pi.active_buzzer.off()
-    time.sleep(0.1 * lo)
+    time.sleep(SHORT_IN_SECONDS * lo)
 
 def to_morse(s):
     result = []
